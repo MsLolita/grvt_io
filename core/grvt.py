@@ -51,7 +51,7 @@ class Grvt(MailUtils, CustomFaker):
         self.session.headers.update(self.headers)
         if proxy:
             self.session.proxies.update({
-                'http': f"http://{proxy}",
+                    'http': f"http://{proxy}",
                 'https': f"http://{proxy}",
             })
 
@@ -73,12 +73,12 @@ class Grvt(MailUtils, CustomFaker):
     def get_browser(self):
         proxy = None
         if self.proxy:
-            server = f"http://{self.proxy.split('@')[1]}"
-            username, password = self.proxy.split('@')[0].split(':')
+            server = self.proxy.split('@')[1]
+            _, username, password = self.proxy.split('@')[0].split(':')
             proxy = {"server": server, "username": username, "password": password}
 
         return self.p.firefox.launch(
-            headless=False,
+            headless=True,
             ignore_default_args=["--enable-automation"],
             args=[
                 '--start-maximized',
@@ -86,13 +86,13 @@ class Grvt(MailUtils, CustomFaker):
             ],
             chromium_sandbox=False,
             proxy=proxy
-        )
+    )
 
     def register(self):
+        print(1)
         with sync_playwright() as self.p:
             browser = self.get_browser()
             self.page = browser.new_page(no_viewport=True)
-
             self.page.goto("https://grvt.io/exchange/sign-up/retail", referer="https://google.com/", timeout=60000)
 
             self.fill_form()
@@ -109,6 +109,9 @@ class Grvt(MailUtils, CustomFaker):
         self.page.wait_for_timeout(wait_timeout * random.uniform(1, 1.5))
 
     def fill_form(self):
+        self.page.wait_for_timeout(1000)
+        a = self.page.screenshot(path="screenshdsot.png")
+        print(a)
         self.perform_action("[id='\:r0\:']", "fill", self.email)
         self.perform_action("#referralCode", "fill", Grvt.referral)
         self.perform_action("[type=submit]", "click")

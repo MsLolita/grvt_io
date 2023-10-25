@@ -46,7 +46,7 @@ class AutoReger:
     def start(self) -> None:
         Grvt.referral = REFERRAL_CODE
 
-        accounts = self.get_accounts()[:1]
+        accounts = self.get_accounts()
 
         with ThreadPoolExecutor(max_workers=THREADS) as executor:
             executor.map(self.register, accounts)
