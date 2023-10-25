@@ -1,0 +1,7 @@
+loguru==0.7.2
+names==0.3.0
+requests==2.31.0
+tls-client==0.2.2
+pyuseragents==1.0.5
+playwright==1.39.0
+imap-tools==1.4.0
