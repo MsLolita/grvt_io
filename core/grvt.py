@@ -89,7 +89,6 @@ class Grvt(MailUtils, CustomFaker):
     )
 
     def register(self):
-        print(1)
         with sync_playwright() as self.p:
             browser = self.get_browser()
             self.page = browser.new_page(no_viewport=True)
@@ -109,9 +108,6 @@ class Grvt(MailUtils, CustomFaker):
         self.page.wait_for_timeout(wait_timeout * random.uniform(1, 1.5))
 
     def fill_form(self):
-        self.page.wait_for_timeout(1000)
-        a = self.page.screenshot(path="screenshdsot.png")
-        print(a)
         self.perform_action("[id='\:r0\:']", "fill", self.email)
         self.perform_action("#referralCode", "fill", Grvt.referral)
         self.perform_action("[type=submit]", "click")
