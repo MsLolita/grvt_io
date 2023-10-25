@@ -74,7 +74,7 @@ class Grvt(MailUtils, CustomFaker):
         proxy = None
         if self.proxy:
             server = self.proxy.split('@')[1]
-            _, username, password = self.proxy.split('@')[0].split(':')
+            username, password = self.proxy.split('@')[0].split('://')[1].split(':')
             proxy = {"server": server, "username": username, "password": password}
 
         return self.p.firefox.launch(
