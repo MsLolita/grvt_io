@@ -27,6 +27,8 @@ class MailUtils:
             delay: int = 60
     ) -> Dict[str, any]:
         with MailBox(self.domain).login(self.email, self.imap_pass) as mailbox:
+            if "imap.outlook.com" == self.domain:
+                mailbox.folder.set('JUNK', True)
             for _ in range(delay // 3):
                 try:
                     for msg in mailbox.fetch(AND(to=to, from_=from_, seen=seen), limit=limit, reverse=reverse):
