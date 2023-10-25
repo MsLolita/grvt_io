@@ -78,7 +78,7 @@ class Grvt(MailUtils, CustomFaker):
             proxy = {"server": server, "username": username, "password": password}
 
         return self.p.firefox.launch(
-            headless=True,
+            headless=False,
             ignore_default_args=["--enable-automation"],
             args=[
                 '--start-maximized',
